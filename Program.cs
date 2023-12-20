@@ -20,23 +20,24 @@ class InfoInteractions
             issueInfo.Output();
         }
 
-        OtherIssueInfo firstOtherNode = new OtherIssueInfo("9", 0.4, 28, 1.3);
-        OtherIssueInfo secondOtherNode = new OtherIssueInfo("10", 0.6, 18, 1.3);
-        OtherIssueInfo thirdOtherNode = new OtherIssueInfo("9", 0.8, 20, 1.3);
-        OtherIssueInfo fourthOtherNode = new OtherIssueInfo("11", 0.5, 24, 1.1);
-        OtherIssueInfo fifthOtherNode = new OtherIssueInfo("10", 0.4, 28, 1.3);
-        OtherIssueInfo sixthOtherNode = new OtherIssueInfo("12", 0.7, 25, 1.2);
-        OtherIssueInfo seventhOtherNode = new OtherIssueInfo("11", 0.5, 30, 1.1);
-        OtherIssueInfo eighthOtherNode = new OtherIssueInfo("12", 0.9, 22, 1.2);
-        OtherIssueInfo ninthOtherNode = new OtherIssueInfo("13", 0.8, 25, 3.2);
-        OtherIssueInfo tenthOtherNode = new OtherIssueInfo("13", 0.5, 30, 3.2);
-        OtherIssueInfo eleventhOtherNode = new OtherIssueInfo("13", 0.6, 26, 3.2);
-        OtherIssueInfo twelvethOtherNode = new OtherIssueInfo("13", 0.4, 32, 3.2);
-        OtherIssueInfo thirteenthOtherNode = new OtherIssueInfo("14", 0.5, 28, 4);
-        OtherIssueInfo fourteenthOtherNode = new OtherIssueInfo("14", 0.7, 22, 4);
-        OtherIssueInfo fifteenthOtherNode = new OtherIssueInfo("14", 0.6, 24, 4);
-        OtherIssueInfo sixteenthOtherNode = new OtherIssueInfo("14", 0.8, 20, 4);
-
+        // GOD FORGIVE ME FOR WHAT I'M ABOUT TO DO
+        OtherIssueInfo firstOtherNode = new OtherIssueInfo("9", 0.4, 10, 28, 1.3);
+        OtherIssueInfo secondOtherNode = new OtherIssueInfo("10", 0.6, 7, 18, 1.3);
+        OtherIssueInfo thirdOtherNode = new OtherIssueInfo("9", 0.8, 8, 20, 1.3);
+        OtherIssueInfo fourthOtherNode = new OtherIssueInfo("11", 0.5, 6, 24, 1.1);
+        OtherIssueInfo fifthOtherNode = new OtherIssueInfo("10", 0.4, 9, 28, 1.3);
+        OtherIssueInfo sixthOtherNode = new OtherIssueInfo("12", 0.7, 5, 25, 1.2);
+        OtherIssueInfo seventhOtherNode = new OtherIssueInfo("11", 0.5, 6, 30, 1.1);
+        OtherIssueInfo eighthOtherNode = new OtherIssueInfo("12", 0.9, 10, 22, 1.2);
+        OtherIssueInfo ninthOtherNode = new OtherIssueInfo("13", 0.8, 10, 25, 3.2);
+        OtherIssueInfo tenthOtherNode = new OtherIssueInfo("13", 0.5, 7, 30, 3.2);
+        OtherIssueInfo eleventhOtherNode = new OtherIssueInfo("13", 0.6, 8, 26, 3.2);
+        OtherIssueInfo twelvethOtherNode = new OtherIssueInfo("13", 0.4, 6, 32, 3.2);
+        OtherIssueInfo thirteenthOtherNode = new OtherIssueInfo("14", 0.5, 9, 28, 4);
+        OtherIssueInfo fourteenthOtherNode = new OtherIssueInfo("14", 0.7, 5, 22, 4);
+        OtherIssueInfo fifteenthOtherNode = new OtherIssueInfo("14", 0.6, 6, 24, 4);
+        OtherIssueInfo sixteenthOtherNode = new OtherIssueInfo("14", 0.8, 10, 20, 4);
+        
         OtherIssueInfo[] otherIssueInfos = {firstOtherNode, secondOtherNode, thirdOtherNode, fourthOtherNode, fifthOtherNode, sixthOtherNode, seventhOtherNode, eighthOtherNode, ninthOtherNode, tenthOtherNode, eleventhOtherNode, twelvethOtherNode, thirteenthOtherNode,  fourteenthOtherNode,fifteenthOtherNode, sixteenthOtherNode };
         ProcessIssueInfos(otherIssueInfos);
     }
@@ -50,8 +51,7 @@ class InfoInteractions
         foreach (OtherIssueInfo issue in issues)
         {
             if (RForEach.ContainsKey(issue))
-            {
-                // Element already exists in the dictionary, update the sums
+            {           
                 var currentSum = RForEach[issue];
 
                 double timeNeeded = currentSum + (issue._timeNeeded / issue._agregation);                
@@ -59,9 +59,8 @@ class InfoInteractions
                 RForEach[issue] = timeNeeded;
             }
             else
-            {
-                // Element doesn't exist in the dictionary, add it with initial sums
-                double newTimeNeeded = issue._timeNeeded / issue._agregation;
+            {          
+                double newTimeNeeded = issue._intensity * issue._timeNeeded / issue._agregation;
                 RForEach.Add(issue, newTimeNeeded);
             }
         }
@@ -71,22 +70,20 @@ class InfoInteractions
         foreach (OtherIssueInfo issue in issues)
         {
             if (waitingTime.ContainsKey(issue))
-            {
-                // Element already exists in the dictionary, update the sums
+            {                
                 var currentSum = waitingTime[issue];
 
-                double waitingTimeValue = currentSum[0] + (Math.Pow(issue._timeNeeded, 2)) / 2 * (1 - RForEach[issue]);
-                double spendings = currentSum[1] + (issue._spendings / issue._agregation);
+                double waitingTimeValue = currentSum[0] + (issue._intensity * Math.Pow(issue._timeNeeded, 2)) / 2 * (1 - RForEach[issue]);
+                double spendings = currentSum[1] + (issue._intensity * 22 * issue._spendings / issue._agregation);
 
                 double[] updatedValues = { waitingTimeValue, spendings };
 
                 waitingTime[issue] = updatedValues;
             }
             else
-            {
-                // Element doesn't exist in the dictionary, add it with initial sums
+            {              
                 double newWaitingTimeValue = (Math.Pow(issue._timeNeeded, 2)) / 2 * (1 - RForEach[issue]);
-                double newSpendings = issue._spendings / issue._agregation;
+                double newSpendings = issue._intensity * issue._spendings / issue._agregation;
 
                 double[] newVal = {newWaitingTimeValue, newSpendings};
                 waitingTime.Add(issue, newVal);
@@ -109,24 +106,24 @@ class FirstIssueInfo
     public FirstIssueInfo(string name, double intensity,double timeNeeded, int spendings)
     {
         _name = name;
-        _intensity = intensity;
+        _intensity = intensity / 22;
         _timeNeeded = timeNeeded;
         _spendings = spendings;
     }
 
     public void Output()
     {
-        Console.WriteLine($"Node: {_name} \n Waiting time: {CalculateWaitingTime()} /n Spendings: {CalculateSpendings()}");
+        Console.WriteLine($"Node: {_name} \n Waiting time: {CalculateWaitingTime()} \n Spendings: {CalculateSpendings()}");
     }
 
     private double CalculateWaitingTime()
     {
-        return (double)(((1 / _intensity) * _timeNeeded) / (1 / _timeNeeded - (1 / _intensity)));
+        return (double)(((_intensity) * _timeNeeded) / (1 / _timeNeeded - _intensity));
     }
 
     private int CalculateSpendings()
     {
-        return (int)_intensity * _spendings;
+        return Convert.ToInt32(_intensity * 22 * _spendings);
     }
 }
 
@@ -134,12 +131,14 @@ class OtherIssueInfo : IComparable<OtherIssueInfo>
 {
     public string _name;   
     public double _timeNeeded;
+    public double _intensity;
     public int _spendings;
     public double _agregation;
 
-    public OtherIssueInfo(string name, double timeNeeded, int spendings, double agregation)
+    public OtherIssueInfo(string name, double timeNeeded, double intensity, int spendings, double agregation)
     {
-        _name = name;        
+        _name = name;
+        _intensity = intensity / 22;
         _timeNeeded = timeNeeded;
         _spendings = spendings;
         _agregation = agregation;
